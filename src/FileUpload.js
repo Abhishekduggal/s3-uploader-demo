@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class FileUpload extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       file: null
@@ -20,8 +20,13 @@ class FileUpload extends Component {
           "Content-Type": "multipart/form-data"
         }
       })
-      .then(response => {
-        // handle your response;
+      .then(() => {
+        this.setState(
+          {
+            file: null
+          },
+          this.props.getImages()
+        );
       })
       .catch(error => {
         // handle your error
@@ -34,11 +39,15 @@ class FileUpload extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
+      // {type file lets use upload file from computer,
+      // accept determines what kind of file the form will accept}
       <form onSubmit={this.submitFile}>
         <input
           label="upload file"
           type="file"
+          accept=".png, .jpg, .jpeg"
           onChange={this.handleFileUpload}
         />
         <button type="submit">Send</button>

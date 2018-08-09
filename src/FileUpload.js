@@ -39,7 +39,6 @@ class FileUpload extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       // {type file lets use upload file from computer,
       // accept determines what kind of file the form will accept}

@@ -1,16 +1,11 @@
 require("dotenv").config();
 const express = require("express");
-// const { json } = require("body-parser");
-// const cors = require("cors");
 const AWS = require("aws-sdk");
 const fs = require("fs");
 const fileType = require("file-type");
 const bluebird = require("bluebird");
 const multiparty = require("multiparty");
 const app = express();
-
-// app.use(json());
-// app.use(cors());
 
 // using credentials to access AWS
 AWS.config.update({
@@ -24,7 +19,7 @@ AWS.config.setPromisesDependency(bluebird);
 // create S3 instance
 const s3 = new AWS.S3();
 
-// function that uploads a file returning a promise
+// s3 function for uploading file
 const uploadFile = (buffer, name, type) => {
   const params = {
     ACL: "public-read",
@@ -36,14 +31,8 @@ const uploadFile = (buffer, name, type) => {
   return s3.upload(params).promise();
 };
 
+// s3 get endpoint
 app.get("/media", async (req, res) => {
-  // console.log("AWS DATA =>", data);
-  // if (err) return console.log(err);
-  // allKeys = data.Contents.map(
-  //   val => `https://s3.amazonaws.com/${process.env.S3_BUCKET}/${val.Key}`
-  // );
-  // console.log("All Keys", allKeys);
-  // res.status(200).json(allKeys);
   var response = await s3
     .listObjectsV2({
       Bucket: process.env.S3_BUCKET
@@ -63,7 +52,6 @@ app.post("/test-upload", (request, response) => {
       const buffer = fs.readFileSync(path);
       const type = fileType(buffer);
       const timestamp = Date.now().toString();
-      // INSERT FILE NAME BELOW
       const fileName = `${timestamp}`;
       const data = await uploadFile(buffer, fileName, type);
       return response.status(200).send(data);

@@ -9,7 +9,7 @@ class FileUpload extends Component {
     };
   }
 
-  // might be to handle compressing file size here??
+  // submit upload and hit s3 post endpoint
   submitFile = event => {
     event.preventDefault();
     const formData = new FormData();
@@ -28,20 +28,22 @@ class FileUpload extends Component {
           this.props.getImages()
         );
       })
-      .catch(error => {
-        // handle your error
+      .catch(err => {
+        console.log(err);
       });
   };
 
-  // might be able to manage uploading many files here?
+  // handle file upload from computer and save in state
   handleFileUpload = event => {
     this.setState({ file: event.target.files });
   };
 
   render() {
+    // SHOW FILE SELECTED FROM PC BEING SAVED IN STATE
+    // console.log(this.state.file);
     return (
-      // {type file lets use upload file from computer,
-      // accept determines what kind of file the form will accept}
+      // type file lets use upload file from computer,
+      // accept determines what kind of file the form will accept
       <form onSubmit={this.submitFile}>
         <input
           label="upload file"

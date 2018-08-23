@@ -10,25 +10,24 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      imgs: []
+      media: []
     };
   }
 
   componentDidMount() {
-    this.getImages();
+    this.getMedia();
   }
 
-  getImages = () => {
+  getMedia = () => {
     axios.get("/media").then(res =>
       this.setState({
-        imgs: res.data.Contents
+        media: res.data.Contents
       })
     );
   };
 
   render() {
-    console.log(this.state.imgs);
-    let allImgs = this.state.imgs.map((e, i) => {
+    let allMedia = this.state.media.map((e, i) => {
       let filePath = `https://s3.us-east-2.amazonaws.com/caroverflowmedia/${
         e.Key
       }`;
@@ -61,8 +60,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        {allImgs}
-        <FileUpload getImages={this.getImages} />
+        {allMedia}
+        <FileUpload getImages={this.getMedia} />
       </div>
     );
   }

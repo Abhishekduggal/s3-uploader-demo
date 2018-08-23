@@ -29,15 +29,26 @@ class App extends Component {
   render() {
     console.log(this.state.imgs);
     let allImgs = this.state.imgs.map((e, i) => {
-      console.log(e);
-      return (
-        <img
-          key={i}
-          src={`https://s3.us-east-2.amazonaws.com/caroverflowmedia/${e.Key}`}
-          alt="s3 images"
-          style={{ height: "250px", width: "250px" }}
-        />
-      );
+      console.log(typeof e.Key);
+      let filePath = `https://s3.us-east-2.amazonaws.com/caroverflowmedia/${
+        e.Key
+      }`;
+      if (e.Key.substr(e.Key.length - 4) === ".mp4") {
+        return (
+          <video width="320" height="240" autoPlay controls key={i}>
+            <source src={filePath} type="video/mp4" />
+          </video>
+        );
+      } else {
+        return (
+          <img
+            key={i}
+            src={filePath}
+            alt="s3 images"
+            style={{ height: "250px", width: "250px" }}
+          />
+        );
+      }
     });
     return (
       <div className="App">

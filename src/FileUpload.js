@@ -46,7 +46,7 @@ class FileUpload extends Component {
         <input
           label="upload file"
           type="file"
-          accept=".png, .jpg, .jpeg"
+          accept=".png, .jpg, .jpeg, .mp4"
           onChange={this.handleFileUpload}
         />
         <button type="submit">Send</button>

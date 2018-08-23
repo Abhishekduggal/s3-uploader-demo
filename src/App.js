@@ -29,7 +29,6 @@ class App extends Component {
   render() {
     console.log(this.state.imgs);
     let allImgs = this.state.imgs.map((e, i) => {
-      console.log(typeof e.Key);
       let filePath = `https://s3.us-east-2.amazonaws.com/caroverflowmedia/${
         e.Key
       }`;
@@ -38,6 +37,12 @@ class App extends Component {
           <video width="320" height="240" autoPlay controls key={i}>
             <source src={filePath} type="video/mp4" />
           </video>
+        );
+      } else if (e.Key.substr(e.Key.length - 4) === ".mp3") {
+        return (
+          <audio key={i} controls>
+            <source src={filePath} type="audio/mpeg" />
+          </audio>
         );
       } else {
         return (
